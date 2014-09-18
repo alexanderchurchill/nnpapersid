@@ -74,6 +74,13 @@ class NADE:
     samples = self.nade_sample_multi(self.W.get_value(),self.V.get_value(),self.b.get_value(),self.c.get_value(),n=n)
     return samples
 
+  def load(self,filename):
+    params = cPicke.load(filename)
+    for i,j in zip(self.params,params):
+        i.set_value(j)
+
+
+
 if __name__ == '__main__':
   n_visible = 10
   n_hidden = 20

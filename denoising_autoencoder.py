@@ -109,5 +109,10 @@ class dA(object):
         self.cost = T.mean(self.L) + 0.0001*self.l2
         self.sample = self.theano_rng.binomial(size=self.input.shape,n=1,p=self.z)
     
+    def load(self,filename):
+        params = cPicke.load(filename)
+        for i,j in zip(self.params,params):
+            i.set_value(j)
+
 
 

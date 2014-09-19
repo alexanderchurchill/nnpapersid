@@ -59,6 +59,18 @@ class NADE:
       a += self.W.get_value()[i, :] * result[i]
     return result
 
+  def sample_clamped(self,sample_dict):
+    result = numpy.empty_like(self.b.get_value())
+    a = self.c.get_value()
+    for i in xrange(len(self.b.get_value())):
+      if i in sample_dict:
+        result[i] = sample_dict[i]
+      else:
+        probability_i = sigmoid(numpy.dot(self.V.get_value()[:, i], sigmoid(a)) + self.b.get_value()[i])
+      result[i] = numpy.random.binomial(n=1, p=probability_i)
+      a += self.W.get_value()[i, :] * result[i]
+    return result
+
   def nade_sample_multi(self, W, V, b, c, n=1):
     result = numpy.empty((n, len(b)))
     probabilities = numpy.empty_like(result)
